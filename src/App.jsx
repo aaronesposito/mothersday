@@ -3,7 +3,6 @@ import './App.css'
 import Bottom from './components/Bottom'
 import Carousel from './components/Carousel'
 import Top from './components/Top'
-
 function App() {
 
   const imageModules = import.meta.glob("./assets/*.jpg", {
