@@ -2,37 +2,28 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ImageContainer from "./Imagecontainer";
 
-export default function Carousel({urls}) {
-    const [count, setCount] = useState(0)
-    const [currImage, setCurrImage] = useState(0)
-    const [url, setUrl] = useState(urls[currImage])
+export default function Carousel({images}) {
+    const [index, setIndex] = useState(0)
 
-    const handleImageChange=()=>{
-        if (currImage == urls.length-1) {
-            setCurrImage(0)
-        }else{
-            setCurrImage(currImage+1)
-        }
-        setUrl(urls[currImage])
-    }
     useEffect(() => {
+        if (!images.length) return;
+
         const intervalId = setInterval(() => {
-        setCount(prevCount => prevCount + 1);
-        }, 1000);
+        setIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 5000);
 
         return () => clearInterval(intervalId);
-
-    }, []); 
+    }, [images.length]);
     
     useEffect(()=>{
-        if (count%5==0){
-            handleImageChange()
+        if (index == images.length){
+            setIndex(0)
         }
-    }, [count])
+    }, [index])
 
     return(
         <div className="carousel-container">
-            <ImageContainer url={url}/>
+            <ImageContainer url={images[index]}/>
         </div>
     )
 }

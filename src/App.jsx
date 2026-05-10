@@ -6,16 +6,20 @@ import Top from './components/Top'
 
 function App() {
 
-  let urls = []
+  const imageModules = import.meta.glob("./assets/*.jpg", {
+    eager: true,
+    query: "?url",
+    import: "default",
+  });
 
-  for (let i=1; i<=31; i++ ){
-    urls.push(`./src/assets/${i}.jpg`)
-  }
+  const images = Object.entries(imageModules)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([, src]) => src);
 
   return (
     <div className="main-container">
       <Top />
-      <Carousel urls={urls}/>
+      <Carousel images={images}/>
       <Bottom />
     </div>
   )
